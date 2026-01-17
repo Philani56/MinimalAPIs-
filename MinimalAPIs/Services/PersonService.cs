@@ -30,9 +30,16 @@ namespace MinimalAPIs.Services
                 };
         }
 
-        public Task<bool> DeletePersonAsync(int id)
+        public async Task<bool> DeletePersonAsync(int id)
         {
-            throw new NotImplementedException();
+            var personToDelete = await context.Persons.FindAsync(id);
+            if (personToDelete is null) 
+                return false;
+
+            context.Persons.Remove(personToDelete);
+            await context.SaveChangesAsync();
+
+            return true;
         }
 
         public async Task<List<PersonResponse>> GetAllPersonsAsync()
