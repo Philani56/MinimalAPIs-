@@ -25,7 +25,38 @@ namespace MinimalAPIs.Controllers
             }
             return Ok(person);
         }
-    }
+    
 
+
+        [HttpPost]
+        public async Task<ActionResult<PersonResponse>> CreatePerson(CreatePersonRequest request)
+        {
+            var createdPerson = await service.AddPersonAsync(request);
+            return CreatedAtAction(nameof(GetPerson), new { id = createdPerson.Id }, createdPerson);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult> UpdatePerson(int id, UpdatePersonRequest request)
+        {
+            var updatedPerson = await service.UpdatePersonAsync(id, request);
+            return updatedPerson ? NoContent() : NotFound("Person with the given Id was not found.");
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeletePerson(int id)
+        {
+            var deletedPerson = await service.DeletePersonAsync(id);
+            return deletedPerson ? NoContent() : NotFound("Person with the given Id was not found.");
+        }
+
+
+
+
+
+
+
+
+
+    }
 }
 

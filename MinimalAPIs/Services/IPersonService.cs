@@ -8,8 +8,8 @@ namespace MinimalAPIs.Services
         Task<List<PersonResponse>> GetAllPersonsAsync();
 
         Task<PersonResponse?> GetPersonByIdAsync(int id);
-        Task<PersonResponse> AddPersonAsync(Person person);
-        Task<bool> UpdatePersonAsync(int id, Person person);
+        Task<PersonResponse> AddPersonAsync(CreatePersonRequest person);
+        Task<bool> UpdatePersonAsync(int id, UpdatePersonRequest person);
         Task<bool> DeletePersonAsync(int id);
     }
 }
