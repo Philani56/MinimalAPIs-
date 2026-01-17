@@ -61,9 +61,20 @@ namespace MinimalAPIs.Services
             return result;
         }
 
-        public Task<bool> UpdatePersonAsync(int id, UpdatePersonRequest person)
+        public async Task<bool> UpdatePersonAsync(int id, UpdatePersonRequest person)
         {
-            throw new NotImplementedException();
+             
+            var existingPerson = await context.Persons.FindAsync(id);
+            if (existingPerson is null) 
+                return false;
+
+            existingPerson.name = person.name;
+            existingPerson.age = person.age;
+            existingPerson.email = person.email;
+
+            await context.SaveChangesAsync();
+
+            return true;
         }
 
          
